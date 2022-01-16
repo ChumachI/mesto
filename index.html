@@ -8,6 +8,91 @@
     <title>Mesto</title>
 </head>
 <body class = "page">
-    
+
+    <header class = "header">
+        <img class = "header__logo" src="images/header-logo.svg" alt="лого заголовка">
+    </header>
+
+    <main class = "content">
+
+        <section class = "profile">
+            <img class = "profile__avatar"src="images/profile-image.jpg" alt="аватар">
+            <div class = "profile__info">
+                <div class = "profile__name-and-edit-button">
+                    <h1 class = "profile__name">Жак-Ив Кусто</h1>
+                    <img class = "profile__edit-button" src="images/Edit-Button.svg" alt="редактировать">
+                </div>
+                
+                <p class = "profile__status">Исследователь океана</p>
+            </div>
+            <button  class = "profile__add-button" src="images/Add-Button.svg" alt="добавить"></button>
+        </section>
+
+        <section class = "places">
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Karachaevsk.jpg" alt="Карачаевск">
+                <div class = "place__bottom">
+                    <h2 class = "place__name">Карачаевск</h2>
+                    <button class = "place__like"></button>
+                </div>
+            </div>
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Elbrus.jpg" alt="Эльбрус">
+                <div class = "place__bottom">
+                    <h2 class = "place__name">Гора Эльбрус</h2>
+                    <button class = "place__like"></button>
+                </div>
+            </div>
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Dombay.jpg" alt="Домбай">
+                <div class = "place__bottom">
+                    <h2 class = "place__name">Домбай</h2>
+                    <button class = "place__like"></button>
+                </div>
+            </div>
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Elbrus.jpg" alt="Эльбрус">
+                <div class = "place__bottom">
+                    <h2 class = "place__name">Гора Эльбрус</h2>
+                    <button class = "place__like"></button>
+                </div>
+            </div>
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Dombay.jpg" alt="Домбай">
+                <div class = "place__bottom">
+                    <h2 class = "place__name">Домбай</h2>
+                    <button class = "place__like"></button>
+                </div>
+            </div>
+
+            <div class = "place">
+                <img  class = "place__image" src="images/Karachaevsk.jpg" alt="Карачаевск">
+                <div class = "place__bottom">
+                <h2 class = "place__name">Карачаево-Черкесия</h2>
+                <button class = "place__like"></button>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class = "footer"><p class = "footer__text">© 2022 Mesto Russia</p></footer>
+
+    <div class = popup>
+        <div class = "popup__container">
+            <img class = "popup__close" src="images/Close Icon.svg" alt="закрыть">
+            <h3 class = "popup__header">Редактировать профиль</h3>
+            <form class = "popup__form" id = "popup__form">
+                <input class = "popup__field" name = "name" type="text">
+                <input class = "popup__field" name = "status" type="text">
+                <button class = "popup__save" type = "submit" form="popup__form">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="script/script.js"></script>
 </body>
 </html>
