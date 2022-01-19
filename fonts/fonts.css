@@ -9,9 +9,3 @@
     src: url(Inter-Black.otf);
     font-weight: 900;
 }
-
-@font-face {
-    font-family: 'Inter';
-    src: url(Inter-Bold.otf);
-    font-weight: 700;
-}
