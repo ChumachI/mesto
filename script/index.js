@@ -11,16 +11,14 @@ let inputName = popupForm.querySelector('[name = "name"]');//поле формы
 let inputStatus = popupForm.querySelector('[name = "status"]');//поле формы статус
 
 
-function popupEdit(){
+function openPopup(){
     popup.classList.add('popup_opened');
     inputName.value = `${profileName.textContent}`;
     inputStatus.value = `${profileStatus.textContent}`;
 }
 
-function popupClose(){
+function closePopup(){
     popup.classList.remove('popup_opened');
-    inputName.value = `${profileName.textContent}`;
-    inputStatus.value = `${profileStatus.textContent}`;
 }
 
 function formSubmitHandler(evt){
@@ -37,6 +35,6 @@ function formSubmitHandler(evt){
 }
 
 
-profileEditButton.addEventListener('click', popupEdit);
+profileEditButton.addEventListener('click', openPopup);
 popupForm.addEventListener('submit', formSubmitHandler); 
-popupCloseButton.addEventListener('click', popupClose);
+popupCloseButton.addEventListener('click', closePopup);
