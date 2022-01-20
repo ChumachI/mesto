@@ -12,9 +12,9 @@ let inputStatus = popupForm.querySelector('[name = "status"]');//поле фор
 
 
 function openPopup(){
-    popup.classList.add('popup_opened');
     inputName.value = `${profileName.textContent}`;
     inputStatus.value = `${profileStatus.textContent}`;
+    popup.classList.add('popup_opened');
 }
 
 function closePopup(){
@@ -23,7 +23,6 @@ function closePopup(){
 
 function formSubmitHandler(evt){
     evt.preventDefault();
-    popup.classList.remove('popup_opened');
     profileName = document.querySelector('.profile__name');
     profileStatus = document.querySelector('.profile__status');
     
@@ -32,6 +31,7 @@ function formSubmitHandler(evt){
     
     profileName.textContent = inputName;
     profileStatus.textContent = inputStatus;
+    popup.classList.remove('popup_opened');
 }
 
 
