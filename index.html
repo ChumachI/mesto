@@ -36,12 +36,20 @@
     <div class = popup>
         <div class = "popup__container">
             <button class = "popup__close"  type="button"></button>
-            <h3 class = "popup__header">Редактировать профиль</h3>
-            <form class = "popup__form" id = "popup__form" name = "popup__form">
+            <h3 class = "popup__header"></h3>
+            
+            <form class = "popup__form" id = "popup__form-edit" name = "popup__form-edit">
                 <input class = "popup__field" name = "name" type="text">
                 <input class = "popup__field" name = "status" type="text">
-                <button class = "popup__save" type = "submit" form="popup__form">Сохранить</button>
+                <button class = "popup__save" type = "submit" form="popup__form-edit">Сохранить</button>
             </form>
+
+            <form class = "popup__form" id = "popup__form-add" name = "popup__form-add">
+                <input class = "popup__field" name = "name" type="text" placeholder="Название">
+                <input class = "popup__field" name = "link" type="text" placeholder="Ссылка на картинку">
+                <button class = "popup__save" type = "submit" form="popup__form-add">Создать</button>
+            </form>
+
         </div>
     </div>
     <template id = "place">

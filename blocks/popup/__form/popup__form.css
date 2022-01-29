@@ -1,9 +1,9 @@
-.popup__form {
+.popup__form{
     max-width: 358px;
     border: none;
     margin-top: 54px;
     width: 100%;
-    display: flex;
+    display: none;
     flex-direction: column;
     gap: 30px;
     padding: 0;
