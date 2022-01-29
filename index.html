@@ -29,53 +29,6 @@
 
         <section class = "places">
 
-            <div class = "place">
-                <img  class = "place__image" src="images/Karachaevsk.jpg" alt="Карачаевск">
-                <div class = "place__bottom">
-                    <h2 class = "place__name">Карачаевск</h2>
-                    <button class = "place__like" type="button"></button>
-                </div>
-            </div>
-
-            <div class = "place">
-                <img  class = "place__image" src="images/Elbrus.jpg" alt="Эльбрус">
-                <div class = "place__bottom">
-                    <h2 class = "place__name">Гора Эльбрус</h2>
-                    <button class = "place__like"  type="button"></button>
-                </div>
-            </div>
-
-            <div class = "place">
-                <img  class = "place__image" src="images/Dombay.jpg" alt="Домбай">
-                <div class = "place__bottom">
-                    <h2 class = "place__name">Домбай</h2>
-                    <button class = "place__like"  type="button"></button>
-                </div>
-            </div>
-
-            <div class = "place">
-                <img  class = "place__image" src="images/Elbrus.jpg" alt="Эльбрус">
-                <div class = "place__bottom">
-                    <h2 class = "place__name">Гора Эльбрус</h2>
-                    <button class = "place__like"  type="button"></button>
-                </div>
-            </div>
-
-            <div class = "place">
-                <img  class = "place__image" src="images/Dombay.jpg" alt="Домбай">
-                <div class = "place__bottom">
-                    <h2 class = "place__name">Домбай</h2>
-                    <button class = "place__like"  type="button"></button>
-                </div>
-            </div>
-
-            <div class = "place">
-                <img  class = "place__image" src="images/Karachaevsk.jpg" alt="Карачаевск">
-                <div class = "place__bottom">
-                <h2 class = "place__name">Карачаево-Черкесия</h2>
-                <button class = "place__like"  type="button"></button>
-                </div>
-            </div>
         </section>
     </main>
     <footer class = "footer"><p class = "footer__text">© 2022 Mesto Russia</p></footer>
@@ -91,7 +44,16 @@
             </form>
         </div>
     </div>
-
+    <template id = "place">
+        <div class = "place">
+            <button class = "place__delete"  type="button"></button>
+            <img  class = "place__image" src="" alt="фото локации">
+            <div class = "place__bottom">
+            <h2 class = "place__name"></h2>
+            <button class = "place__like"  type="button"></button>
+            </div>
+        </div>
+    </template>
     <script src="script/index.js"></script>
 </body>
 </html>
