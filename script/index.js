@@ -71,10 +71,12 @@ function createPlace(name, link){
     const placeTemplate = document.querySelector('#place').content;
     const place = placeTemplate.querySelector('.place').cloneNode(true);
     const placeLikeButton = place.querySelector('.place__like');
+    const placeDeleteButton = place.querySelector('.place__delete')
 
     place.querySelector('.place__image').src = link;
     place.querySelector('.place__name').textContent = name;
     placeLikeButton.addEventListener('click', placeLike);// привязать обработчик кнопки лайк
+    placeDeleteButton.addEventListener('click', placeDelete);// привязать обработчик удаления
 
     places.prepend(place);
 }
@@ -110,7 +112,12 @@ function placeLike(evt){ //обработчик лайков
     else{
         evt.target.classList.add('place__like_active');
     }
-    
+}
+
+function placeDelete(evt) { //обработчик удаления фото
+    let placecls = this.closest('.place');
+    console.log(placecls);
+    placecls.remove();
 }
 
 for(let item of initialCards){
