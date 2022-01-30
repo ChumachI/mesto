@@ -3,3 +3,7 @@
     border-top-right-radius: 10px;
     height: 282px;
 }
+
+.place__image:hover {
+    cursor: pointer;
+}

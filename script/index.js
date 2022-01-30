@@ -5,15 +5,15 @@ const popup = document.querySelector('.popup');
 let popupFormEdit = document.querySelector('#popup__form-edit');
 let popupFormAdd = document.querySelector('#popup__form-add');
 const popupCloseButton = document.querySelector('.popup__close');
+const closeZoomButton = document.querySelector('.zoom__close');
 let pleceLikeButtons = document.querySelectorAll('.place__like');
+const zoom = document.querySelector('.zoom');
 
 let profileName = document.querySelector('.profile__name');//имя в профиле
 let profileStatus = document.querySelector('.profile__status'); //статус в профиле
 
 const inputName = popupFormEdit.querySelector('[name = "name"]');//поле формы имя
 const inputStatus = popupFormEdit.querySelector('[name = "status"]');//поле формы статус
-
-
 
 const initialCards = [
     {
@@ -67,16 +67,19 @@ function closePopup(){
 }
 
 function createPlace(name, link){
-    const places = document.querySelector('.places')
+    const places = document.querySelector('.places');
     const placeTemplate = document.querySelector('#place').content;
     const place = placeTemplate.querySelector('.place').cloneNode(true);
     const placeLikeButton = place.querySelector('.place__like');
-    const placeDeleteButton = place.querySelector('.place__delete')
+    const placeDeleteButton = place.querySelector('.place__delete');
+    const placeImage = place.querySelector('.place__image');
 
     place.querySelector('.place__image').src = link;
     place.querySelector('.place__name').textContent = name;
+
     placeLikeButton.addEventListener('click', placeLike);// привязать обработчик кнопки лайк
     placeDeleteButton.addEventListener('click', placeDelete);// привязать обработчик удаления
+    placeImage.addEventListener('click', openImagePopup);
 
     places.prepend(place);
 }
@@ -105,24 +108,33 @@ function formAddHandler(evt){
     closePopup();
 }
 
-function placeLike(evt){ //обработчик лайков
-    if(evt.target.classList.contains('place__like_active')){
-        evt.target.classList.remove('place__like_active');
+function placeLike(){ //обработчик лайков
+    if(this.classList.contains('place__like_active')){
+        this.classList.remove('place__like_active');
     }
     else{
-        evt.target.classList.add('place__like_active');
+        this.classList.add('place__like_active');
     }
 }
 
-function placeDelete(evt) { //обработчик удаления фото
+function placeDelete() { //обработчик удаления фото
     let placecls = this.closest('.place');
-    console.log(placecls);
     placecls.remove();
+}
+
+function openImagePopup() {
+    let placecls = this.closest('.place');//находим родительский блок
+    zoom.classList.add('zoom_active');
+    zoom.querySelector('.zoom__image').src = this.closest('.place__image').src;
+    zoom.querySelector('.zoom__label').textContent = placecls.querySelector('.place__name').textContent;// с помощью родительского блока находим название 
+}
+
+function closeImagePopup(){
+    zoom.classList.remove('zoom_active');
 }
 
 for(let item of initialCards){
     createPlace(item.name, item.link);
-
 }
 
 profileEditButton.addEventListener('click', editPopup);
@@ -130,3 +142,4 @@ profileAddButton.addEventListener('click',addPopup);
 popupFormEdit.addEventListener('submit', formEditHandler);
 popupFormAdd.addEventListener('submit', formAddHandler);
 popupCloseButton.addEventListener('click', closePopup);
+closeZoomButton.addEventListener('click', closeImagePopup);
