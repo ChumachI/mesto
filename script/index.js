@@ -2,7 +2,7 @@
 const profileEditButton = document.querySelector('.profile__edit-button');
 const popup = document.querySelector('.popup');
 const popupCloseButton = document.querySelector('.popup__close');
-let popupFormEdit = document.querySelector('.popup__form');
+const popupFormEdit = document.querySelector('.popup__form');
 let profileName = document.querySelector('.profile__name');//имя в профиле
 let profileStatus = document.querySelector('.profile__status'); //статус в профиле
 const inputName = popupFormEdit.querySelector('[name = "name"]');//поле формы имя
@@ -12,10 +12,10 @@ const inputStatus = popupFormEdit.querySelector('[name = "status"]');//поле 
 const profileAddButton = document.querySelector('.profile__add-button');
 const addPopup = document.querySelector('.add-popup');
 const addPopupCloseButton = document.querySelector('.add-popup__close');
-let popupFormAdd = document.querySelector('.add-popup__form');
+const popupFormAdd = document.querySelector('.add-popup__form');
 
 //кнопка лайк
-let pleceLikeButtons = document.querySelectorAll('.place__like');
+const pleceLikeButtons = document.querySelectorAll('.place__like');
 
 //зум фото
 const zoom = document.querySelector('.zoom');
@@ -100,8 +100,8 @@ function formEditHandler(evt){
     profileName = document.querySelector('.profile__name');
     profileStatus = document.querySelector('.profile__status');
     
-    let inputName = this.name.value;
-    let inputStatus = this.status.value;
+    const inputName = this.name.value;
+    const inputStatus = this.status.value;
     
     profileName.textContent = inputName;
     profileStatus.textContent = inputStatus;
@@ -112,8 +112,8 @@ function formEditHandler(evt){
 function formAddHandler(evt){
     evt.preventDefault();
     
-    let inputName = this.name.value;
-    let inputLink = this.link.value;
+    const inputName = this.name.value;
+    const inputLink = this.link.value;
     createPlace(inputName, inputLink);
     this.name.value = '';
     this.link.value = '';
@@ -138,7 +138,7 @@ function placeDelete() {
 
 //открытие зума для просмотра фото
 function openImagePopup() {
-    let placecls = this.closest('.place');//находим родительский блок
+    const placecls = this.closest('.place');//находим родительский блок
     zoom.classList.add('zoom_active');
     zoom.querySelector('.zoom__image').src = this.closest('.place__image').src;
     zoom.querySelector('.zoom__label').textContent = placecls.querySelector('.place__name').textContent;// с помощью родительского блока находим название 
