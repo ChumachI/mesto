@@ -42,30 +42,31 @@ const initialCards = [
     }
   ];
 
+//функция открытия попапа общая
 function openPopup(){
     inputName.value = `${profileName.textContent}`;
     inputStatus.value = `${profileStatus.textContent}`;
     popup.classList.add('popup_opened');
 }
-
+//функция открытия попапа для редактирования данных
 function editPopup(){
     popup.querySelector('.popup__header').textContent = 'Редактировать профиль';
     popupFormEdit.classList.add('popup__form_active');
     openPopup();
 }
-
+//функция открытия попапа для добавления фото
 function addPopup(){
     popup.querySelector('.popup__header').textContent = 'Новое место';
     popupFormAdd.classList.add('popup__form_active');
     openPopup();
 }
-
+//функция закрытия попапа
 function closePopup(){
     popup.classList.remove('popup_opened');
     popupFormAdd.classList.remove('popup__form_active');
     popupFormEdit.classList.remove('popup__form_active');
 }
-
+//функция создания нового фото
 function createPlace(name, link){
     const places = document.querySelector('.places');
     const placeTemplate = document.querySelector('#place').content;
@@ -83,7 +84,7 @@ function createPlace(name, link){
 
     places.prepend(place);
 }
-
+//обработчик события внесения изменений в описание профиля
 function formEditHandler(evt){
     evt.preventDefault();
     profileName = document.querySelector('.profile__name');
@@ -96,7 +97,7 @@ function formEditHandler(evt){
     profileStatus.textContent = inputStatus;
     closePopup();
 }
-
+//обработчик события добавления новой фотографии
 function formAddHandler(evt){
     evt.preventDefault();
     
@@ -107,8 +108,8 @@ function formAddHandler(evt){
     this.link.value = '';
     closePopup();
 }
-
-function placeLike(){ //обработчик лайков
+//обработчик лайков
+function placeLike(){ 
     if(this.classList.contains('place__like_active')){
         this.classList.remove('place__like_active');
     }
@@ -116,23 +117,23 @@ function placeLike(){ //обработчик лайков
         this.classList.add('place__like_active');
     }
 }
-
-function placeDelete() { //обработчик удаления фото
+//обработчик удаления фото
+function placeDelete() { 
     let placecls = this.closest('.place');
     placecls.remove();
 }
-
+//открытие зума для просмотра фото
 function openImagePopup() {
     let placecls = this.closest('.place');//находим родительский блок
     zoom.classList.add('zoom_active');
     zoom.querySelector('.zoom__image').src = this.closest('.place__image').src;
     zoom.querySelector('.zoom__label').textContent = placecls.querySelector('.place__name').textContent;// с помощью родительского блока находим название 
 }
-
+//закрытие зума
 function closeImagePopup(){
     zoom.classList.remove('zoom_active');
 }
-
+//создание первых 6ти фотокарточек
 for(let item of initialCards){
     createPlace(item.name, item.link);
 }
