@@ -1,4 +1,4 @@
-.popup__form{
+.add-popup__form{
     max-width: 358px;
     border: none;
     margin-top: 54px;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 438px) {
-    .popup__form {
+    .add-popup__form {
         margin-top: 68px;
         gap: 25px;
     }

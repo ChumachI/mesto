@@ -36,18 +36,25 @@
     <div class = popup>
         <div class = "popup__container">
             <button class = "popup__close"  type="button"></button>
-            <h3 class = "popup__header"></h3>
+            <h3 class = "popup__header">Редактировать профиль</h3>
 
             <form class = "popup__form" id = "popup__form-edit" name = "popup__form-edit">
                 <input class = "popup__field" name = "name" type="text">
                 <input class = "popup__field" name = "status" type="text">
                 <button class = "popup__save" type = "submit" form="popup__form-edit">Сохранить</button>
             </form>
-            <!--Признаюсь размещая две формы в один попап я игрался, познавая программирование, если будет необходимо разнесу в разные-->
-            <form class = "popup__form" id = "popup__form-add" name = "popup__form-add">
-                <input class = "popup__field" name = "name" type="text" placeholder="Название">
-                <input class = "popup__field" name = "link" type="text" placeholder="Ссылка на картинку">
-                <button class = "popup__save" type = "submit" form="popup__form-add">Создать</button>
+        </div>
+        
+    </div>
+
+    <div class = "add-popup">
+        <div class = "add-popup__container">
+            <button class = "add-popup__close"  type="button"></button>
+            <h3 class = "add-popup__header">Новое место</h3>
+            <form class = "add-popup__form" id = "add-popup__form" name = "add-popup__form">
+                <input class = "add-popup__field" name = "name" type="text" placeholder="Название">
+                <input class = "add-popup__field" name = "link" type="text" placeholder="Ссылка на картинку">
+                <button class = "add-popup__save" type = "submit" form="add-popup__form">Создать</button>
             </form>
         </div>
         

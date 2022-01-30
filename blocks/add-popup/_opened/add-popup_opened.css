@@ -1,4 +1,4 @@
-.popup__form_active {
+.add-popup_opened {
     display: flex;
     opacity: 1;
     visibility: visible;
