@@ -88,8 +88,8 @@ function createPlace(name, link){
     place.querySelector('.place__name').textContent = name;
 
     placeLikeButton.addEventListener('click', placeLike);// привязать обработчик кнопки лайк
-    placeDeleteButton.addEventListener('click', placeDelete);// привязать обработчик удаления
-    placeImage.addEventListener('click', openImagePopup);
+    placeDeleteButton.addEventListener('click', deletePlace);// привязать обработчик удаления
+    placeImage.addEventListener('click', openImagePopup);// привязать зум по нажатию на картинку
 
     places.prepend(place);
 }
@@ -131,7 +131,7 @@ function placeLike(){
 }
 
 //обработчик удаления фото
-function placeDelete() { 
+function deletePlace() { 
     let placecls = this.closest('.place');
     placecls.remove();
 }
