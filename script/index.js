@@ -5,8 +5,8 @@ const popupCloseButton = popup.querySelector('.popup__close');
 const popupFormEdit = popup.querySelector('.popup__form');
 const profileName = document.querySelector('.profile__name');//имя в профиле
 const profileStatus = document.querySelector('.profile__status'); //статус в профиле
-const inputName = popupFormEdit.querySelector('[name = "name"]');//поле формы имя
-const inputStatus = popupFormEdit.querySelector('[name = "status"]');//поле формы статус
+const inputName = popupFormEdit.querySelector('.popup__field_for_name');//поле формы имя
+const inputStatus = popupFormEdit.querySelector('.popup__field_for_status');//поле формы статус
 
 //все что касается попапа добавления фото
 const profileAddButton = document.querySelector('.profile__add-button');
@@ -22,43 +22,13 @@ const zoom = document.querySelector('.popup_type_image-zoom');
 const closeZoomButton = zoom.querySelector('.popup__close');
 
 
-
-
-
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ];
-
-//функция открытия попапа редактирования
+//функция открытия попапа
 function openPopup(){
     if(this.classList.contains('place__image')) {//условие для открытие увеличенного изображения
         zoom.classList.add('popup_opened');
         zoom.querySelector('.popup__zoom-image').src = this.src;
-        zoom.querySelector('.popup__zoom-label').textContent = this.alt;
         zoom.querySelector('.popup__zoom-image').alt = this.alt
+        zoom.querySelector('.popup__zoom-label').textContent = this.alt;
 
     } else if (this.classList.contains('profile__edit-button')){// условие для открытия окна "Редактировать профиль"
         inputName.value = `${profileName.textContent}`;
@@ -78,7 +48,6 @@ function closePopup(){
 
 //функция создания нового фото
 function createPlace(name, link){
-    const places = document.querySelector('.places');
     const placeTemplate = document.querySelector('#place').content;
     const place = placeTemplate.querySelector('.place').cloneNode(true);
     const placeLikeButton = place.querySelector('.place__like');
@@ -93,6 +62,12 @@ function createPlace(name, link){
     placeDeleteButton.addEventListener('click', deletePlace);// привязать обработчик удаления
     placeImage.addEventListener('click', openPopup);// привязать зум по нажатию на картинку
 
+    return place;
+}
+
+function renderCard(name, link) {
+    const place = createPlace(name, link);
+    const places = document.querySelector('.places');
     places.prepend(place);
 }
 
@@ -115,7 +90,7 @@ function formAddHandler(evt){
     
     const inputName = this.name.value;
     const inputLink = this.link.value;
-    createPlace(inputName, inputLink);
+    renderCard(inputName, inputLink);
     this.name.value = '';
     this.link.value = '';
 
@@ -134,13 +109,13 @@ function placeLike(){
 
 //обработчик удаления фото
 function deletePlace() { 
-    let placecls = this.closest('.place');
+    const placecls = this.closest('.place');
     placecls.remove();
 }
 
 //создание первых 6ти фотокарточек
 for(let item of initialCards){
-    createPlace(item.name, item.link);
+    renderCard(item.name, item.link);
 }
 
 profileEditButton.addEventListener('click', openPopup);
