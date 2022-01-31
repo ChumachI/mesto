@@ -33,7 +33,7 @@
     </main>
     <footer class = "footer"><p class = "footer__text">© 2022 Mesto Russia</p></footer>
 
-    <div class = popup>
+    <div class = "popup popup_type_profile-edit">
         <div class = "popup__container">
             <button class = "popup__close"  type="button"></button>
             <h3 class = "popup__header">Редактировать профиль</h3>
@@ -47,26 +47,27 @@
         
     </div>
 
-    <div class = "add-popup">
-        <div class = "add-popup__container">
-            <button class = "add-popup__close"  type="button"></button>
-            <h3 class = "add-popup__header">Новое место</h3>
-            <form class = "add-popup__form" id = "add-popup__form" name = "add-popup__form">
-                <input class = "add-popup__field" name = "name" type="text" placeholder="Название">
-                <input class = "add-popup__field" name = "link" type="text" placeholder="Ссылка на картинку">
-                <button class = "add-popup__save" type = "submit" form="add-popup__form">Создать</button>
+    <div class = "popup popup_type_image-add">
+        <div class = "popup__container">
+            <button class = "popup__close"  type="button"></button>
+            <h3 class = "popup__header">Новое место</h3>
+            <form class = "popup__form" id = "add-popup__form" name = "add-popup__form">
+                <input class = "popup__field" name = "name" type="text" placeholder="Название">
+                <input class = "popup__field" name = "link" type="text" placeholder="Ссылка на картинку">
+                <button class = "popup__save" type = "submit" form="add-popup__form">Создать</button>
             </form>
         </div>
         
     </div>
 
-    <div class = "zoom">
+    <div class = "popup popup_type_image-zoom">
         <div class = "zoom__container">
-            <button class = "zoom__close"  type="button"></button>
+            <button class = "popup__close"  type="button"></button>
             <img class = "zoom__image" src="#" alt="увеличенная картинка">
             <label class = "zoom__label"></label>
         </div>
     </div>
+
     <template id = "place">
         <div class = "place">
             <button class = "place__delete"  type="button"></button>
@@ -77,6 +78,7 @@
             </div>
         </div>
     </template>
+
     <script src="script/index.js"></script>
 </body>
 </html>

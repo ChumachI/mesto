@@ -1,25 +1,25 @@
 //все что касается попапа редактирования информации
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup');
-const popupCloseButton = document.querySelector('.popup__close');
-const popupFormEdit = document.querySelector('.popup__form');
-let profileName = document.querySelector('.profile__name');//имя в профиле
-let profileStatus = document.querySelector('.profile__status'); //статус в профиле
+const popup = document.querySelector('.popup_type_profile-edit');
+const popupCloseButton = popup.querySelector('.popup__close');
+const popupFormEdit = popup.querySelector('.popup__form');
+const profileName = document.querySelector('.profile__name');//имя в профиле
+const profileStatus = document.querySelector('.profile__status'); //статус в профиле
 const inputName = popupFormEdit.querySelector('[name = "name"]');//поле формы имя
 const inputStatus = popupFormEdit.querySelector('[name = "status"]');//поле формы статус
 
 //все что касается попапа добавления фото
 const profileAddButton = document.querySelector('.profile__add-button');
-const addPopup = document.querySelector('.add-popup');
-const addPopupCloseButton = document.querySelector('.add-popup__close');
-const popupFormAdd = document.querySelector('.add-popup__form');
+const addPopup = document.querySelector('.popup_type_image-add');
+const addPopupCloseButton = addPopup.querySelector('.popup__close');
+const popupFormAdd = addPopup.querySelector('.popup__form');
 
 //кнопка лайк
 const pleceLikeButtons = document.querySelectorAll('.place__like');
 
 //зум фото
-const zoom = document.querySelector('.zoom');
-const closeZoomButton = document.querySelector('.zoom__close');
+const zoom = document.querySelector('.popup_type_image-zoom');
+const closeZoomButton = zoom.querySelector('.popup__close');
 
 
 
@@ -54,25 +54,22 @@ const initialCards = [
 
 //функция открытия попапа редактирования
 function openPopup(){
-    inputName.value = `${profileName.textContent}`;
-    inputStatus.value = `${profileStatus.textContent}`;
-    popup.classList.add('popup_opened');
+    if(this.classList.contains('place__image')) {//условие для открытие увеличенного изображения
+        zoom.classList.add('popup_opened');
+        zoom.querySelector('.zoom__image').src = this.src;
+    } else if (this.classList.contains('profile__edit-button')){// условие для открытия окна "Редактировать профиль"
+        inputName.value = `${profileName.textContent}`;
+        inputStatus.value = `${profileStatus.textContent}`;
+        popup.classList.add('popup_opened');
+    } else if (this.classList.contains('profile__add-button')){// условие для открытия окна "новое место"
+        addPopup.classList.add('popup_opened');
+    }
 }
 
 //функция закрытия попапа редактирования
 function closePopup(){
+    const popup = document.querySelector('.popup_opened');
     popup.classList.remove('popup_opened');
-}
-
-//открытие попапа для добавления фото:
-function openAddPopup() {
-    addPopup.classList.add('add-popup_opened');
-    console.log(addPopup.classList);
-}
-
-//закрытие попапа для добавления фото:
-function closeAddPopup(){
-    addPopup.classList.remove('add-popup_opened');
 }
 
 //функция создания нового фото
@@ -89,7 +86,7 @@ function createPlace(name, link){
 
     placeLikeButton.addEventListener('click', placeLike);// привязать обработчик кнопки лайк
     placeDeleteButton.addEventListener('click', deletePlace);// привязать обработчик удаления
-    placeImage.addEventListener('click', openImagePopup);// привязать зум по нажатию на картинку
+    placeImage.addEventListener('click', openPopup);// привязать зум по нажатию на картинку
 
     places.prepend(place);
 }
@@ -97,14 +94,13 @@ function createPlace(name, link){
 //обработчик события внесения изменений в описание профиля
 function formEditHandler(evt){
     evt.preventDefault();
-    profileName = document.querySelector('.profile__name');
-    profileStatus = document.querySelector('.profile__status');
     
     const inputName = this.name.value;
     const inputStatus = this.status.value;
     
     profileName.textContent = inputName;
     profileStatus.textContent = inputStatus;
+
     closePopup();
 }
 
@@ -117,6 +113,7 @@ function formAddHandler(evt){
     createPlace(inputName, inputLink);
     this.name.value = '';
     this.link.value = '';
+
     closePopup();
 }
 
@@ -136,28 +133,15 @@ function deletePlace() {
     placecls.remove();
 }
 
-//открытие зума для просмотра фото
-function openImagePopup() {
-    const placecls = this.closest('.place');//находим родительский блок
-    zoom.classList.add('zoom_active');
-    zoom.querySelector('.zoom__image').src = this.closest('.place__image').src;
-    zoom.querySelector('.zoom__label').textContent = placecls.querySelector('.place__name').textContent;// с помощью родительского блока находим название 
-}
-
-//закрытие зума
-function closeImagePopup(){
-    zoom.classList.remove('zoom_active');
-}
-
 //создание первых 6ти фотокарточек
 for(let item of initialCards){
     createPlace(item.name, item.link);
 }
 
 profileEditButton.addEventListener('click', openPopup);
-profileAddButton.addEventListener('click',openAddPopup);
+profileAddButton.addEventListener('click',openPopup);
 popupFormEdit.addEventListener('submit', formEditHandler);
 popupFormAdd.addEventListener('submit', formAddHandler);
 popupCloseButton.addEventListener('click', closePopup);
-closeZoomButton.addEventListener('click', closeImagePopup);
-addPopupCloseButton.addEventListener('click',closeAddPopup);
+closeZoomButton.addEventListener('click', closePopup);
+addPopupCloseButton.addEventListener('click',closePopup);
