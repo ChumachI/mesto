@@ -19,6 +19,8 @@ const pleceLikeButtons = document.querySelectorAll('.place__like');
 
 //зум фото
 const zoom = document.querySelector('.popup_type_image-zoom');
+const zoomImage = zoom.querySelector('.popup__zoom-image');
+const zoomLable = zoom.querySelector('.popup__zoom-label');
 const closeZoomButton = zoom.querySelector('.popup__close');
 
 
@@ -26,9 +28,9 @@ const closeZoomButton = zoom.querySelector('.popup__close');
 function openPopup(){
     if(this.classList.contains('place__image')) {//условие для открытие увеличенного изображения
         zoom.classList.add('popup_opened');
-        zoom.querySelector('.popup__zoom-image').src = this.src;
-        zoom.querySelector('.popup__zoom-image').alt = this.alt
-        zoom.querySelector('.popup__zoom-label').textContent = this.alt;
+        zoomImage.src = this.src;
+        zoomImage.alt = this.alt
+        zoomLable.textContent = this.alt;
 
     } else if (this.classList.contains('profile__edit-button')){// условие для открытия окна "Редактировать профиль"
         inputName.value = `${profileName.textContent}`;
@@ -42,7 +44,7 @@ function openPopup(){
 
 //функция закрытия попапа редактирования
 function closePopup(){
-    const popup = document.querySelector('.popup_opened');
+    const popup = document.querySelector('.popup_opened');//считаю такой вариант наиболее компактным, но если требуется развернуть в конструкцию if то могу переделать.
     popup.classList.remove('popup_opened');
 }
 
@@ -75,11 +77,8 @@ function renderCard(name, link) {
 function formEditHandler(evt){
     evt.preventDefault();
     
-    const inputName = this.name.value;
-    const inputStatus = this.status.value;
-    
-    profileName.textContent = inputName;
-    profileStatus.textContent = inputStatus;
+    profileName.textContent = this.name.value;
+    profileStatus.textContent = this.status.value;
 
     closePopup();
 }
@@ -99,12 +98,7 @@ function formAddHandler(evt){
 
 //обработчик лайков
 function placeLike(){ 
-    if(this.classList.contains('place__like_active')){
-        this.classList.remove('place__like_active');
-    }
-    else{
-        this.classList.add('place__like_active');
-    }
+    this.classList.toggle('place__like_active');
 }
 
 //обработчик удаления фото
