@@ -56,11 +56,14 @@ const initialCards = [
 function openPopup(){
     if(this.classList.contains('place__image')) {//условие для открытие увеличенного изображения
         zoom.classList.add('popup_opened');
-        zoom.querySelector('.zoom__image').src = this.src;
+        zoom.querySelector('.popup__zoom-image').src = this.src;
+        zoom.querySelector('.popup__zoom-label').textContent = this.textContent;
+
     } else if (this.classList.contains('profile__edit-button')){// условие для открытия окна "Редактировать профиль"
         inputName.value = `${profileName.textContent}`;
         inputStatus.value = `${profileStatus.textContent}`;
         popup.classList.add('popup_opened');
+
     } else if (this.classList.contains('profile__add-button')){// условие для открытия окна "новое место"
         addPopup.classList.add('popup_opened');
     }
