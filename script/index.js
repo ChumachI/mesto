@@ -13,6 +13,7 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const popupAddImage = document.querySelector('.popup_type_image-add');
 const popupAddImageCloseButton = popupAddImage.querySelector('.popup__close');
 const popupFormAdd = popupAddImage.querySelector('.popup__form');
+const placeTemplate = document.querySelector('#place').content;
 
 //зум фото
 const zoom = document.querySelector('.popup_type_image-zoom');
@@ -30,7 +31,7 @@ const places = document.querySelector('.places');
 //функция открытия попапа общая
 function openPopup(popup){
     popup.classList.add('popup_opened');
-    document.addEventListener('keyup', popupKeyHandler);
+    document.addEventListener('keyup', closePopupOnEsc);
 }
 
 //обработчик открытия попапа для редактирования информации
@@ -39,7 +40,7 @@ function openEditPopup() {
     inputStatus.value = `${profileStatus.textContent}`;
     openPopup(popup);
 
-    const event = new Event('input')
+    const event = new Event('input');
     inputName.dispatchEvent(event);//генерирую событие нажатия клавиши чтобы обновить строку ошибки валидации
     inputStatus.dispatchEvent(event);
 }
@@ -64,7 +65,7 @@ function openZoomPopup() {
 //функция закрытия попапа общая
 function closePopup(popup){
     popup.classList.remove('popup_opened');
-    document.removeEventListener('keyup', popupKeyHandler);
+    document.removeEventListener('keyup', closePopupOnEsc);
 }
 
 //обработчик закрытия попапа для редактирования информации
@@ -75,6 +76,14 @@ function closeEditPopup() {
 //обработчик закрытия попапа для добавления места 
 function closeAddPopup(){
     closePopup(popupAddImage);
+    disableSubmitButton(popupAddImage);
+}
+
+//"отключить" кнопку сабмита попапа
+function disableSubmitButton(popup){
+    const button = popup.querySelector('.popup__save');
+    button.classList.add('popup__save_disabled');
+    button.setAttribute('disabled', true);
 }
 
 //обработчик закрытия попапа зума картинки 
@@ -95,7 +104,6 @@ function closeOnOverlay(evt) {
 
 //функция создания нового фото
 function createPlace(name, link){
-    const placeTemplate = document.querySelector('#place').content;
     const place = placeTemplate.querySelector('.place').cloneNode(true);
     const placeLikeButton = place.querySelector('.place__like');
     const placeDeleteButton = place.querySelector('.place__delete');
@@ -126,9 +134,9 @@ function enableExitOnOverlay() {
     });
 }
 
-function popupKeyHandler(evt){
-    const popupActive = document.querySelector('.popup_opened');
+function closePopupOnEsc(evt){
     if(evt.key === 'Escape'){
+        const popupActive = document.querySelector('.popup_opened');
         closePopup(popupActive);
     }
 }
@@ -153,6 +161,7 @@ function formAddHandler(evt){
     renderCard(inputName, inputLink);
     this.name.value = '';
     this.link.value = '';
+
 
     closeAddPopup();
 }
