@@ -25,11 +25,12 @@ const places = document.querySelector('.places');
 
 
 
-
+/*ОТКРЫТИЕ ПОПАПОВ*/
 
 //функция открытия попапа общая
 function openPopup(popup){
     popup.classList.add('popup_opened');
+    document.addEventListener('keyup', popupKeyHandler);
 }
 
 //обработчик открытия попапа для редактирования информации
@@ -37,6 +38,10 @@ function openEditPopup() {
     inputName.value = `${profileName.textContent}`;
     inputStatus.value = `${profileStatus.textContent}`;
     openPopup(popup);
+
+    const event = new Event('input')
+    inputName.dispatchEvent(event);//генерирую событие нажатия клавиши чтобы обновить строку ошибки валидации
+    inputStatus.dispatchEvent(event);
 }
 
 //обработчик открытия попапа для добавления места
@@ -54,11 +59,12 @@ function openZoomPopup() {
 
 
 
-
+/*ЗАКРЫТИЕ ПОПАПОВ*/
 
 //функция закрытия попапа общая
 function closePopup(popup){
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keyup', popupKeyHandler);
 }
 
 //обработчик закрытия попапа для редактирования информации
@@ -74,6 +80,14 @@ function closeAddPopup(){
 //обработчик закрытия попапа зума картинки 
 function closeZoomPopup() {
     closePopup(zoom);
+}
+
+//закрытие при нажатии на оверлей
+function closeOnOverlay(evt) {
+    evt.stopPropagation();
+    if(evt.target.classList.contains('popup')){
+        closePopup(this);
+    }
 }
 
 
@@ -103,11 +117,25 @@ function renderCard(name, link) {
     places.prepend(place);
 }
 
+//навесить слушателей закрытия на все попапы
+function enableExitOnOverlay() {
+    const popups = Array.from(document.querySelectorAll('.popup'));
 
+    popups.forEach((popup) =>{
+        popup.addEventListener('mousedown',closeOnOverlay);
+    });
+}
 
+function popupKeyHandler(evt){
+    const popupActive = document.querySelector('.popup_opened');
+    if(evt.key === 'Escape'){
+        closePopup(popupActive);
+    }
+}
 
 //обработчик события внесения изменений в описание профиля
 function formEditHandler(evt){
+
     evt.preventDefault();
     
     profileName.textContent = this.name.value;
@@ -154,3 +182,7 @@ popupFormAdd.addEventListener('submit', formAddHandler);
 popupCloseButton.addEventListener('click', closeEditPopup);
 closeZoomButton.addEventListener('click', closeZoomPopup);
 popupAddImageCloseButton.addEventListener('click',closeAddPopup);
+
+
+
+enableExitOnOverlay();
