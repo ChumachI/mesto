@@ -113,7 +113,7 @@ function createPlace(name, link){
     place.querySelector('.place__name').textContent = name;
     placeImage.alt = name;
 
-    placeLikeButton.addEventListener('click', placeLike);// привязать обработчик кнопки лайк
+    placeLikeButton.addEventListener('click', switchLike);// привязать обработчик кнопки лайк
     placeDeleteButton.addEventListener('click', deletePlace);// привязать обработчик удаления
     placeImage.addEventListener('click', openZoomPopup);// привязать зум по нажатию на картинку
 
@@ -142,7 +142,7 @@ function closePopupOnEsc(evt){
 }
 
 //обработчик события внесения изменений в описание профиля
-function formEditHandler(evt){
+function executeFormEdit(evt){
 
     evt.preventDefault();
     
@@ -153,7 +153,7 @@ function formEditHandler(evt){
 }
 
 //обработчик события добавления новой фотографии
-function formAddHandler(evt){
+function executeFormAdd(evt){
     evt.preventDefault();
     
     const inputName = this.name.value;
@@ -167,7 +167,7 @@ function formAddHandler(evt){
 }
 
 //обработчик лайков
-function placeLike(){ 
+function switchLike(){ 
     this.classList.toggle('place__like_active');
 }
 
@@ -185,8 +185,8 @@ for(let item of initialCards){
 profileEditButton.addEventListener('click', openEditPopup);
 profileAddButton.addEventListener('click',openAddPopup);
 
-popupFormEdit.addEventListener('submit', formEditHandler);
-popupFormAdd.addEventListener('submit', formAddHandler);
+popupFormEdit.addEventListener('submit', executeFormEdit);
+popupFormAdd.addEventListener('submit', executeFormAdd);
 
 popupCloseButton.addEventListener('click', closeEditPopup);
 closeZoomButton.addEventListener('click', closeZoomPopup);
