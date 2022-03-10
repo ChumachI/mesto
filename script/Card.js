@@ -1,4 +1,4 @@
-import {openPopup, closePopup} from "./utils.js";
+import {openPopup} from "./utils.js";
 import {zoomImage, zoomLable, zoom} from './constants.js';
 
 export {Card}
@@ -9,8 +9,6 @@ class Card {
         this._link = data.link;
         this._element = document.querySelector(cardTemplateSelector).content
         .querySelector('.place').cloneNode(true);
-        this._closeZoomButton = zoom.querySelector('.popup__close');
-        this._closeZoomButton.addEventListener('click', this._closeZoomPopup);
     }
 
     generateCard() {
@@ -40,6 +38,7 @@ class Card {
 
     _deletePlace = () => { 
         this._element.remove();
+        this._element = null;
     }
 
     _openZoomPopup() {
@@ -48,9 +47,5 @@ class Card {
         zoomLable.textContent = this.alt;
         openPopup(zoom);
         
-    }
-
-    _closeZoomPopup() {
-        closePopup(zoom);
     }
 }

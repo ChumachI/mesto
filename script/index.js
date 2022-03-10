@@ -2,12 +2,13 @@ import {Card} from './Card.js';
 import {initialCards} from './cards.js';
 import { FormValidator } from './FormValidator.js';
 import { openPopup, closePopup } from './utils.js';
+import { zoom } from './constants.js';
 
 //все что касается попапа редактирования информации
 const profileEditButton = document.querySelector('.profile__edit-button');
-const popup = document.querySelector('.popup_type_profile-edit');
-const popupCloseButton = popup.querySelector('.popup__close');
-const popupFormEdit = popup.querySelector('.popup__form');
+const profilePopup = document.querySelector('.popup_type_profile-edit');
+const popupCloseButton = profilePopup.querySelector('.popup__close');
+const popupFormEdit = profilePopup.querySelector('.popup__form');
 const profileName = document.querySelector('.profile__name');//имя в профиле
 const profileStatus = document.querySelector('.profile__status'); //статус в профиле
 const inputName = popupFormEdit.querySelector('.popup__field_for_name');//поле формы имя
@@ -18,6 +19,8 @@ const profileAddButton = document.querySelector('.profile__add-button');
 const popupAddImage = document.querySelector('.popup_type_image-add');
 const popupAddImageCloseButton = popupAddImage.querySelector('.popup__close');
 const popupFormAdd = popupAddImage.querySelector('.popup__form');
+
+const closeZoomButton = zoom.querySelector('.popup__close');
 
 //валидация форм
 const validationConfig = {
@@ -43,7 +46,7 @@ const places = document.querySelector('.places');
 function openEditPopup() {
     inputName.value = `${profileName.textContent}`;
     inputStatus.value = `${profileStatus.textContent}`;
-    openPopup(popup);
+    openPopup(profilePopup);
 
     const event = new Event('input');
     inputName.dispatchEvent(event);//генерирую событие нажатия клавиши чтобы обновить строку ошибки валидации
@@ -59,7 +62,12 @@ function openAddPopup() {
 
 //обработчик закрытия попапа для редактирования информации
 function closeEditPopup() {
-    closePopup(popup);
+    closePopup(profilePopup);
+}
+
+//закрытие зума
+function closeZoomPopup() {
+    closePopup(zoom);
 }
 
 //обработчик закрытия попапа для добавления места 
@@ -69,8 +77,8 @@ function closeAddPopup(){
 }
 
 //"отключить" кнопку сабмита попапа
-function disableSubmitButton(popup){
-    const button = popup.querySelector('.popup__save');
+function disableSubmitButton(profilePopup){
+    const button = profilePopup.querySelector('.popup__save');
     button.classList.add('popup__save_disabled');
     button.setAttribute('disabled', true);
 }
@@ -135,5 +143,6 @@ popupFormAdd.addEventListener('submit', executeFormAdd);
 
 popupCloseButton.addEventListener('click', closeEditPopup);
 popupAddImageCloseButton.addEventListener('click',closeAddPopup);
+closeZoomButton.addEventListener('click', closeZoomPopup)
 
 enableExitOnOverlay();
