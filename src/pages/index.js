@@ -6,53 +6,61 @@ import UserInfo from '../components/UserInfo.js';// setUserInfo(), getUserInfo()
 import PopupWithImage from '../components/PopupWithImage.js';//open(), конструктор принимает картинку
 import PopupWithForm from '../components/PopupWithForm.js'; // close(), setEventListeners(), конструктор принимает селектор попапа и обработчик сабмита
 import Section from '../components/Section.js';
-import {profileAddButton, profileEditButton, inputName, inputStatus} from '../components/constants.js'
+import {profileAddButton, profileEditButton, inputName, inputStatus} from '../components/utils/constants.js'
 import '../pages/index.css';
 
 //класс UserInfo с данными пользователя.
 const userInfo = new UserInfo({userNameSelector:'.profile__name', userInfoSelector: '.profile__status'});
+const popupWithImage = new PopupWithImage('.popup_type_image-zoom');
+popupWithImage.setEventListeners();
 //слой section
 const section = new Section({items: initialCards, renderer: (item) => {
-    
-    const card = new Card(item,'#place',()=>{
-        new PopupWithImage('.popup_type_image-zoom', card).open();
-    });
-    return card.generateCard();
+    const card = createCard(item);
+    section.addItem(card.generateCard());
 }},'.places');
+section.renderItems();
 
 //попап редактирования профиля
-const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(evt) => {
-    evt.preventDefault();
-    userInfo.setUserInfo({userName: evt.target.name.value,  userInfo: evt.target.status.value});
+const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) => {
+    userInfo.setUserInfo({userName: formValues.name,  userInfo: formValues.status});
     popupEditForm.close();
 });
+popupEditForm.setEventListeners();
 
 //попап добавления фото
-const popupAddForm = new PopupWithForm('.popup_type_image-add',(evt) => {
-    evt.preventDefault();
-    const inputName = evt.target.name.value;
-    const inputLink = evt.target.link.value;
-    section.renderItems({name: inputName, link: inputLink});
-    evt.target.name.value = '';
-    evt.target.link.value = '';
+const popupAddForm = new PopupWithForm('.popup_type_image-add',(formValues) => {
+    const inputName = formValues.name;
+    const inputLink = formValues.link;
+    const card = createCard({name: inputName, link: inputLink})
+    section.addItem(card.generateCard());
     popupAddForm.close();
 });
+popupAddForm.setEventListeners();
 
 //активация валидаторов
-const addFormValidator = new FormValidator(validationConfig,'.popup_type_image-add');
-const editFormVaalidator = new FormValidator(validationConfig,'.popup_type_profile-edit');
-addFormValidator.enableValidation();
-editFormVaalidator.enableValidation();
+const formAddValidator = new FormValidator(validationConfig,'.popup_type_image-add');
+const formEditValidator = new FormValidator(validationConfig,'.popup_type_profile-edit');
+formAddValidator.enableValidation();
+formEditValidator.enableValidation();
 
 //установка слушателя на кнопку редактирования
 profileEditButton.addEventListener('click', () => {
-    inputName.value = `${userInfo.getUserInfo().userName}`;
-    inputStatus.value = `${userInfo.getUserInfo().userInfo}`;
-    editFormVaalidator.toggleButtonState();
+    const {userName, userStatus} = userInfo.getUserInfo();
+    inputName.value = `${userName}`;
+    inputStatus.value = `${userStatus}`;
+    formEditValidator.toggleButtonState();
     popupEditForm.open();
 });
 
 //установка слушателя на кнопку добавления карточки
 profileAddButton.addEventListener('click', () => {
+    formAddValidator.toggleButtonState();
     popupAddForm.open();
 });
+
+function createCard(item){
+    const card = new Card(item,'#place',(image)=>{
+        popupWithImage.open(image);
+    });
+    return card;
+}

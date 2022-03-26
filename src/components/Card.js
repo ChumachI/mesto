@@ -23,11 +23,10 @@ export default class Card {
     _setEventListeners() {
         this._likeButton.addEventListener('click', ()=> {this._switchLike()});// привязать обработчик кнопки лайк
         this._deleteButton.addEventListener('click', ()=> {this._deletePlace()});// привязать обработчик удаления
-        this._image.addEventListener('click', ()=>  {this._handleCardClick()});// привязать зум по нажатию на картинку
+        this._image.addEventListener('click', ()=>  {this._handleCardClick(this._image)});// привязать зум по нажатию на картинку
     }
     _switchLike = () => { 
         this._likeButton.classList.toggle('place__like_active');
-        console.log(123);
     }
     _deletePlace = () => { 
         this._element.remove();

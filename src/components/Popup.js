@@ -4,7 +4,6 @@ export default class Popup {
     constructor(popupSelector){
         this._popup = document.querySelector(popupSelector);
         this._handleEscClose = this._handleEscClose.bind(this);
-        this.setEventListeners();        
     }
     //Содержит публичные методы open и close, которые отвечают за открытие и закрытие попапа.
     open() {

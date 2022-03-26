@@ -9,7 +9,7 @@ export default class UserInfo {
     /*Содержит публичный метод getUserInfo, который возвращает объект с данными пользователя. 
     Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.*/
     getUserInfo() {
-        return {userName: this._userName.textContent, userInfo: this._userInfo.textContent};
+        return {userName: this._userName.textContent, userStatus: this._userInfo.textContent};
     }
 
     /* Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу. */
