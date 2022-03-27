@@ -41,11 +41,11 @@
             <h3 class = "popup__header">Редактировать профиль</h3>
 
             <form class = "popup__form" id = "popup__form-edit" name = "popup__form-edit">
-                <div>
+                <div class = "popup__input-container">
                     <input class = "popup__field popup__field_for_name" id = "popup__name" name = "name" type="text" minlength="2" maxlength="40" required novalidate placeholder="">
                     <span class="popup__field-error popup__name-error"></span>
                 </div>
-                <div>
+                <div class = "popup__input-container">
                     <input class = "popup__field popup__field_for_status" id = "popup__status" name = "status" type="text" minlength="2" maxlength="200" required novalidate placeholder="">
                     <span class="popup__field-error popup__status-error"></span>
                 </div>
@@ -60,11 +60,11 @@
             <button class = "popup__close"  type="button"></button>
             <h3 class = "popup__header">Новое место</h3>
             <form class = "popup__form" id = "add-popup__form" name = "add-popup__form">
-                <div>
+                <div class = "popup__input-container">
                     <input class = "popup__field" id = "popup__place-name" type = "text" name = "name" placeholder="Название" required minlength="2" maxlength="30">
                     <span class="popup__field-error popup__place-name-error"></span>
                 </div>
-                <div>
+                <div class = "popup__input-container">
                     <input class = "popup__field" id = "popup__place-link" type = "url" name = "link" placeholder="Ссылка на картинку" required>
                     <span class="popup__field-error popup__place-link-error"></span>
                 </div>

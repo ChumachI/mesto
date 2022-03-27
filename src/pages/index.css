@@ -41,6 +41,7 @@
 @import url(../blocks/popup/__field-error/popup__field-error.css);
 @import url(../blocks/popup/__field-error/_active/popup__field-error_active.css);
 @import url(../blocks/popup/__save/_disabled/popup__save_disabled.css);
+@import url(../blocks/popup/__input-container/popup__input-container.css);
 
 @import url(../blocks/popup/__zoom-container/popup__zoom-container.css);
 @import url(../blocks/popup/__zoom-image/popup__zoom-image.css);
