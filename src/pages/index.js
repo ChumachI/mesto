@@ -90,7 +90,7 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) 
 popupEditForm.setEventListeners();
 
 //попап перед удалением картинки
-const popupDeleteCard = new PopupCardDelete('.popup__image-delete')
+const popupDeleteCard = new PopupCardDelete('.popup_type_image-delete')
 popupDeleteCard.setEventListeners();
 
 
