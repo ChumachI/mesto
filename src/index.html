@@ -18,13 +18,18 @@
 
         <section class = "profile">
             <!--<img class = "profile__avatar" src="./images/profile-image.jpg" alt="аватар">-->
-            <img class = "profile__avatar" src="<%=require('./images/profile-image.jpg')%>" alt="аватар">
+            <div class = "profile__avatar">
+                <div class = "profile__avatar-overlay">
+                    <img class = "profile__avatar-edit-icon" src="<%=require('./images/pen.svg')%>" alt="">
+                </div>
+            </div>
+
             <div class = "profile__info">
                 <div class = "profile__name-and-edit-button">
-                    <h1 class = "profile__name">Жак-Ив Кусто</h1>
+                    <h1 class = "profile__name"></h1>
                     <button class = "profile__edit-button" type="button"></button>
                 </div>
-                <p class = "profile__status">Исследователь океана</p>
+                <p class = "profile__status"></p>
             </div>
             <button  class = "profile__add-button" type="button"></button>
         </section>
@@ -71,7 +76,6 @@
                 <button class = "popup__save popup__save_disabled" type = "submit" form="add-popup__form" disabled>Создать</button>
             </form>
         </div>
-        
     </div>
 
     <div class = "popup popup_type_image-zoom">
@@ -82,13 +86,39 @@
         </div>
     </div>
 
+    <div class = "popup popup__image-delete">
+        <div class = "popup__container">
+            <button class = "popup__close"  type="button"></button>
+                    <h3 class = "popup__offer">Вы уверены?</h3>
+                    <button class = "popup__save" type = "button">Да</button>
+        </div>
+    </div>
+
+    <div class = "popup popup_type_avatar-edit">
+        <div class = "popup__container">
+            <button class = "popup__close"  type="button"></button>
+            <h3 class = "popup__header">Обновить аватар</h3>
+            <form class = "popup__form" id = "edit-avatar__form" name = "edit-avatar__form">
+                <div class = "popup__input-container">
+                    <input class = "popup__field" id = "popup__place-link" type = "url" name = "link" placeholder="Ссылка на картинку" required>
+                    <span class="popup__field-error popup__place-link-error"></span>
+                </div>
+                <button class = "popup__save popup__save_disabled" type = "submit" form="edit-avatar__form" disabled>Сохранить</button>
+            </form>
+        </div>
+    </div>
+    
+
     <template id = "place">
         <div class = "place">
             <button class = "place__delete"  type="button"></button>
             <img  class = "place__image" src="#" alt="фото локации">
             <div class = "place__bottom">
             <h2 class = "place__name"></h2>
-            <button class = "place__like"  type="button"></button>
+            <div class = "place__like-container">
+                <button class = "place__like"  type="button"></button>
+                <label class = "place__like-counter"></label>
+            </div>
             </div>
         </div>
     </template>
