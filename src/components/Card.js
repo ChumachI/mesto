@@ -17,15 +17,15 @@
 в данном массиве содержатся пользователи поставивших лайк*/
 export default class Card {
 
-    constructor(data, cardTemplateSelector, userId, handleCardClick, handleDelete, handleLike) {
+    constructor(data, cardTemplateSelector, userId, api, handleCardClick, handleDelete) {
         this._name =  data.name;
         this._link =  data.link;
         this._userId = userId;
         this._element = document.querySelector(cardTemplateSelector).content
         .querySelector('.place').cloneNode(true);
+        this._api = api;
         this._handleCardClick = handleCardClick;
         this._handleDelete = handleDelete;
-        this._handleLike = handleLike;
         this._likeButton = this._element.querySelector('.place__like');
         this._deleteButton = this._element.querySelector('.place__delete');
         this._image = this._element.querySelector('.place__image');
@@ -50,7 +50,7 @@ export default class Card {
     }
     
     _setEventListeners() {
-        this._likeButton.addEventListener('click', ()=> {this._handleLike()});
+        this._likeButton.addEventListener('click', ()=> {this._switchLike()});
         this._deleteButton.addEventListener('click', (evt)=> {
             this._handleDelete(evt);            
         });
@@ -65,6 +65,22 @@ export default class Card {
         this._element = null;
     }
 
+    _switchLike(){
+
+        this._likeButton.classList.toggle('place__like_active');
+        if(this._likeButton.classList.contains('place__like_active')){
+            this._api.setLike(this._id)
+            .then(res => {
+                this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
+            })
+        } else {
+            this._api.deleteLike(this._id)
+            .then(res => {
+                this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
+            })
+        }
+    }
+
     //функция для проверки статуса лайка(установлен или нет)
     //активируется при создании карточек и загрузке их с сервера
     //проверяем наличие моего id  в списке лайков картинки
@@ -77,7 +93,7 @@ export default class Card {
             })
         //если находим переключаем
         if(isContain) {
-            this._likeButton.classList.toggle('place__like_active');//
+            this._likeButton.classList.toggle('place__like_active');
         }
     }
     
@@ -90,17 +106,4 @@ export default class Card {
     getId(){
         return this._id;
     }
-
-    getLikes(){
-        return this._likes;
-    }
-
-    getLikeCounter(){
-        return this._likeCounter;
-    }
-
-    getLikeButton(){
-        return this._likeButton;
-    }
-
 }

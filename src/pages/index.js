@@ -1,12 +1,12 @@
 import Card from '../components/Card.js';// generateCard(), конструктор принимет объект с двумя полями (имя карточки и ссылка), шаблон карточки, и обработчик нажатия на картинку
-import {validationConfig} from '../components/validationConfig.js'
-import { FormValidator } from '../components/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
+import {validationConfig} from '../../utils/validationConfig.js'
+import { FormValidator } from '../../utils/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
 import UserInfo from '../components/UserInfo.js';// setUserInfo(), getUserInfo(), конструктор принимает объект с двумя полями (селектор имени и селектор поля информации о пользователе)
 import PopupWithImage from '../components/PopupWithImage.js';//open(), конструктор принимает картинку
 import PopupWithForm from '../components/PopupWithForm.js'; // close(), setEventListeners(), конструктор принимает селектор попапа и обработчик сабмита
 import PopupCardDelete from '../components/PopupCardDelete.js'; //создал спец класс для попапа удаления карточек
 import Section from '../components/Section.js';
-import {profileAddButton, profileEditButton, avatarEditButton, inputName, inputStatus} from '../components/utils/constants.js'
+import {profileAddButton, profileEditButton, avatarEditButton, inputName, inputStatus} from '../../utils/constants.js'
 import { ApiConfig } from '../components/ApiConfig.js';
 import Api from '../components/Api.js';
 import '../pages/index.css';
@@ -26,11 +26,13 @@ const popupAvatarEdit = new PopupWithForm('.popup_type_avatar-edit', (formValues
     .then(() => {
         userInfo.setAvatar(inputLink);
     })
+    .then(()=>{
+        popupAvatarEdit.close();
+    })
     .catch((err) => {
         console.log(err);
     })
     .finally(()=>{
-        popupAvatarEdit.close();
         renderLoading(button, false);
     })
     
@@ -71,6 +73,9 @@ api.getUserInfo()
     //от себя добавил transition, чтобы проявление было плавным, как и все появления на сайте - попапы, зумы и т д.
     document.querySelector('.page').classList.add('page_loaded');
 })
+.catch((err) => {
+    console.log(err);
+})
 
 
 
@@ -81,8 +86,14 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) 
     renderLoading(button, true)
     userInfo.setUserInfo({userName: formValues.name,  userInfo: formValues.status});
     api.setProfileInfo(formValues.name, formValues.status)
-    .finally(()=>{
+    .then(()=>{
         popupEditForm.close();
+    })
+    .catch((err) => {
+        console.log(err);
+    })
+    .finally(()=>{
+        
         renderLoading(button, false)
     })
     
@@ -113,9 +124,15 @@ const popupAddForm = new PopupWithForm('.popup_type_image-add',(formValues) => {
     .then(data => {
         card = createCard(data);
         section.addItem(card.generateCard());
-    });
+    })
+    .then(()=>{
+        popupAddForm.close();
+    })
+    .catch((err) => {
+        console.log(err);
+    })
     
-    popupAddForm.close();
+    
     
 });
 popupAddForm.setEventListeners();
@@ -156,6 +173,8 @@ function createCard(data){
 
         userInfo.getUserInfo().userId,
 
+        api,
+
         (image)=>{
             popupWithImage.open(image);
         },
@@ -168,6 +187,8 @@ function createCard(data){
                 api.deleteCard(cardId)
                 .then(() => {
                     cardElement.remove();
+                })
+                .then(()=>{
                     popupDeleteCard.close();
                 })
                 .catch((err) => {
@@ -177,23 +198,7 @@ function createCard(data){
             popupDeleteCard.open();
         },
 
-        () => {
-            const cardId = card.getId();
-            const cardLikeCounter = card.getLikeCounter();
-            const cardLikeButton = card.getLikeButton();
-            cardLikeButton.classList.toggle('place__like_active');
-            if(cardLikeButton.classList.contains('place__like_active')){
-                api.setLike(cardId)
-                .then(res => {
-                    cardLikeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
-                })
-            } else {
-                api.deleteLike(cardId)
-                .then(res => {
-                    cardLikeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
-                })
-            }
-        },
+
     );
     return card;
 }
