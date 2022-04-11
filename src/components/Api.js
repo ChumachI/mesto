@@ -1,7 +1,7 @@
 export default class Api {
     constructor(options) {
         this._commonUrlPart = options.commonUrlPart;
-        this._token = options.token;
+        this._headers = options.headers;
     }
 
     _checkResult(result) {
@@ -15,9 +15,7 @@ export default class Api {
     //загружаем карточки с сервера
     getInitialCards() {
         return fetch(`${this._commonUrlPart}/cards`, {
-          headers: {
-            authorization: `${this._token}`
-          }
+          headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -25,9 +23,7 @@ export default class Api {
     //получаем информацию о пользователе
     getUserInfo(){
         return fetch(`${this._commonUrlPart}/users/me`, {
-            headers: {
-                authorization: `${this._token}`
-            } 
+            headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -36,10 +32,7 @@ export default class Api {
     setProfileInfo(userName, userInfo){
         return fetch(`${this._commonUrlPart}/users/me`, {
             method: 'PATCH',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name: `${userName}`,
                 about: `${userInfo}`
@@ -51,10 +44,7 @@ export default class Api {
     postNewCard({cardName, inputLink}){
         return fetch(`${this._commonUrlPart}/cards`, {
             method: 'POST',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 name : cardName,
                 link : inputLink,
@@ -66,10 +56,7 @@ export default class Api {
     setLike(id){
         return fetch(`${this._commonUrlPart}/cards/${id}/likes`,{
             method: 'PUT',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            } 
+            headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -77,10 +64,7 @@ export default class Api {
     deleteLike(id){
         return fetch(`${this._commonUrlPart}/cards/${id}/likes`,{
             method: 'DELETE',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            } 
+            headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -88,10 +72,7 @@ export default class Api {
         
         return fetch(`${this._commonUrlPart}/cards/${id}/likes`,{
             method: 'GET',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -100,10 +81,7 @@ export default class Api {
         if(!id) return;
         return fetch(`${this._commonUrlPart}/cards/${id}`,{
             method: 'DELETE',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            }
+            headers: this._headers
         })
         .then(result => this._checkResult(result))
     }
@@ -111,10 +89,7 @@ export default class Api {
     setAvatar(link){
         return fetch(`${this._commonUrlPart}/users/me/avatar`, {
             method: 'PATCH',
-            headers: {
-                authorization: `${this._token}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers,
             body: JSON.stringify({
                 avatar: link
             })

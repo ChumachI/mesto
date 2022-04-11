@@ -1,13 +1,13 @@
 import Card from '../components/Card.js';// generateCard(), конструктор принимет объект с двумя полями (имя карточки и ссылка), шаблон карточки, и обработчик нажатия на картинку
-import {validationConfig} from '../../utils/validationConfig.js'
-import { FormValidator } from '../../utils/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
+import {validationConfig} from '../utils/validationConfig.js'
+import { FormValidator } from '../utils/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
 import UserInfo from '../components/UserInfo.js';// setUserInfo(), getUserInfo(), конструктор принимает объект с двумя полями (селектор имени и селектор поля информации о пользователе)
 import PopupWithImage from '../components/PopupWithImage.js';//open(), конструктор принимает картинку
 import PopupWithForm from '../components/PopupWithForm.js'; // close(), setEventListeners(), конструктор принимает селектор попапа и обработчик сабмита
 import PopupCardDelete from '../components/PopupCardDelete.js'; //создал спец класс для попапа удаления карточек
 import Section from '../components/Section.js';
-import {profileAddButton, profileEditButton, avatarEditButton, inputName, inputStatus} from '../../utils/constants.js'
-import { ApiConfig } from '../components/ApiConfig.js';
+import {profileAddButton, profileEditButton, avatarEditButton, inputName, inputStatus} from '../utils/constants.js'
+import { ApiConfig } from '../utils/ApiConfig.js';
 import Api from '../components/Api.js';
 import '../pages/index.css';
 
@@ -18,9 +18,11 @@ import '../pages/index.css';
 const userInfo = new UserInfo({userNameSelector:'.profile__name', userInfoSelector: '.profile__status', avatarSelector: '.profile__avatar'});
 const popupWithImage = new PopupWithImage('.popup_type_image-zoom');
 popupWithImage.setEventListeners();
+
+
+
 const popupAvatarEdit = new PopupWithForm('.popup_type_avatar-edit', (formValues) => {
-    const button = document.querySelector('.popup_type_avatar-edit').querySelector('.popup__save')
-    renderLoading(button, true)
+    popupAvatarEdit.renderLoading(true)
     const inputLink = formValues.link;
     api.setAvatar(inputLink)
     .then(() => {
@@ -33,11 +35,13 @@ const popupAvatarEdit = new PopupWithForm('.popup_type_avatar-edit', (formValues
         console.log(err);
     })
     .finally(()=>{
-        renderLoading(button, false);
+        popupAvatarEdit.renderLoading(false);
     })
     
 });
 popupAvatarEdit.setEventListeners();
+
+
 
 //объект section
 const section = new Section({ renderer: (item) => {
@@ -82,19 +86,19 @@ api.getUserInfo()
 
 //попап редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) => {
-    const button = document.querySelector('.popup_type_profile-edit').querySelector('.popup__save')
-    renderLoading(button, true)
-    userInfo.setUserInfo({userName: formValues.name,  userInfo: formValues.status});
+    popupEditForm.renderLoading(true)
+    
     api.setProfileInfo(formValues.name, formValues.status)
     .then(()=>{
         popupEditForm.close();
+        userInfo.setUserInfo({userName: formValues.name,  userInfo: formValues.status});
     })
     .catch((err) => {
         console.log(err);
     })
     .finally(()=>{
         
-        renderLoading(button, false)
+        popupEditForm.renderLoading(false)
     })
     
 });
@@ -119,10 +123,9 @@ popupDeleteCard.setEventListeners();
 const popupAddForm = new PopupWithForm('.popup_type_image-add',(formValues) => {
     const inputName = formValues.name;
     const inputLink = formValues.link;
-    let card = null;
     api.postNewCard({cardName: inputName, inputLink: inputLink})
     .then(data => {
-        card = createCard(data);
+        const card = createCard(data);
         section.addItem(card.generateCard());
     })
     .then(()=>{
@@ -203,12 +206,6 @@ function createCard(data){
     return card;
 }
 
-function renderLoading(button, isLoading){
-    if(isLoading){
-        button.textContent = 'Сохранение...'
-    } else {
-        button.textContent = 'Сохранить'
-    }
-}
+
 
 /*было трудно, но очень круто*/

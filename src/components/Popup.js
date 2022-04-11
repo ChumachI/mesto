@@ -17,7 +17,6 @@ export default class Popup {
     /*Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.*/
     _handleEscClose(evt){
         if(evt.key === 'Escape'){
-            const popupActive = document.querySelector('.popup_opened');
             this.close();
         }
     }

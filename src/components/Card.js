@@ -1,18 +1,3 @@
-/*  
-образец данных карточки 
-    "likes": [],
-    "_id": "5d1f0611d321eb4bdcd707dd",
-    "name": "Байкал",
-    "link": "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-    "owner": {
-      "name": "Jacques Cousteau",
-      "about": "Sailor, researcher",
-      "avatar": "https://pictures.s3.yandex.net/frontend-developer/ava.jpg",
-      "_id": "ef5f7423f7f5e22bef4ad607",
-      "cohort": "local"
-    },
-*/
-
 /*необходимо добавить отображение лайков, для этого требуется использовать массив likes который мы получаем с сервера вместе с данными карточки, 
 в данном массиве содержатся пользователи поставивших лайк*/
 export default class Card {
@@ -66,17 +51,17 @@ export default class Card {
     }
 
     _switchLike(){
-
-        this._likeButton.classList.toggle('place__like_active');
         if(this._likeButton.classList.contains('place__like_active')){
-            this._api.setLike(this._id)
-            .then(res => {
-                this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
-            })
-        } else {
             this._api.deleteLike(this._id)
             .then(res => {
                 this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
+                this._likeButton.classList.toggle('place__like_active');
+            })
+        } else {
+            this._api.setLike(this._id)
+            .then(res => {
+                this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
+                this._likeButton.classList.toggle('place__like_active');
             })
         }
     }
