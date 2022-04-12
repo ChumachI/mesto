@@ -57,12 +57,18 @@ export default class Card {
                 this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
                 this._likeButton.classList.toggle('place__like_active');
             })
+            .catch((err) => {
+                console.error(err);
+            });
         } else {
             this._api.setLike(this._id)
             .then(res => {
                 this._likeCounter.textContent = res.likes.length;//получаем из ответа количество лайков
                 this._likeButton.classList.toggle('place__like_active');
             })
+            .catch((err) => {
+                console.error(err);
+            });
         }
     }
 

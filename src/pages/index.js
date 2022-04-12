@@ -1,6 +1,6 @@
 import Card from '../components/Card.js';// generateCard(), конструктор принимет объект с двумя полями (имя карточки и ссылка), шаблон карточки, и обработчик нажатия на картинку
 import {validationConfig} from '../utils/validationConfig.js'
-import { FormValidator } from '../utils/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
+import { FormValidator } from '../components/FormValidator.js';//enableValidation(), конструктор принимает объект настроек и саму проверяемую форму
 import UserInfo from '../components/UserInfo.js';// setUserInfo(), getUserInfo(), конструктор принимает объект с двумя полями (селектор имени и селектор поля информации о пользователе)
 import PopupWithImage from '../components/PopupWithImage.js';//open(), конструктор принимает картинку
 import PopupWithForm from '../components/PopupWithForm.js'; // close(), setEventListeners(), конструктор принимает селектор попапа и обработчик сабмита
@@ -22,7 +22,7 @@ popupWithImage.setEventListeners();
 
 
 const popupAvatarEdit = new PopupWithForm('.popup_type_avatar-edit', (formValues) => {
-    popupAvatarEdit.renderLoading(true)
+    popupAvatarEdit.renderLoading('Сохранение...');
     const inputLink = formValues.link;
     api.setAvatar(inputLink)
     .then(() => {
@@ -35,7 +35,7 @@ const popupAvatarEdit = new PopupWithForm('.popup_type_avatar-edit', (formValues
         console.log(err);
     })
     .finally(()=>{
-        popupAvatarEdit.renderLoading(false);
+        popupAvatarEdit.renderLoading('Сохранить');
     })
     
 });
@@ -86,7 +86,7 @@ api.getUserInfo()
 
 //попап редактирования профиля
 const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) => {
-    popupEditForm.renderLoading(true)
+    popupEditForm.renderLoading('Сохранение...');
     
     api.setProfileInfo(formValues.name, formValues.status)
     .then(()=>{
@@ -98,7 +98,7 @@ const popupEditForm = new PopupWithForm('.popup_type_profile-edit',(formValues) 
     })
     .finally(()=>{
         
-        popupEditForm.renderLoading(false)
+        popupEditForm.renderLoading('Сохранить');
     })
     
 });
@@ -121,6 +121,7 @@ popupDeleteCard.setEventListeners();
 //после обработки сабмита попап закрывается
 /*здесь я распологаю запрос в API по передаче данных карточки на сервер*/
 const popupAddForm = new PopupWithForm('.popup_type_image-add',(formValues) => {
+    popupAddForm.renderLoading('Сохранение...');
     const inputName = formValues.name;
     const inputLink = formValues.link;
     api.postNewCard({cardName: inputName, inputLink: inputLink})
@@ -133,6 +134,9 @@ const popupAddForm = new PopupWithForm('.popup_type_image-add',(formValues) => {
     })
     .catch((err) => {
         console.log(err);
+    })
+    .finally(()=>{
+        popupAddForm.renderLoading('Создать');
     })
     
     
